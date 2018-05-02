@@ -17,7 +17,7 @@ function tipeFetch (type, id) {
       return res.json()
     } else {
       if (res.status === 401) {
-        return new Error('Error 401: Make sure you have valid Org Secret Key and API Key')
+        return new Error('Error 401: Make sure you have a valid Org Secret Key and API Key')
       }
       return new Error(res.message || 'There was an error making a request')
     }
