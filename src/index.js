@@ -25,11 +25,13 @@ function tipeFetch (type, id) {
 }
 
 function createClient (config) {
-  if (config.apiKey) {
-    API_KEY = config.apiKey
+  const apiKey = config.apiKey || config.ApiKey || config.Authorization || config.authorization
+  if (apiKey) {
+    API_KEY = apiKey
   }
-  if (config.orgKey) {
-    ORG_KEY = config.orgKey
+  const orgKey = config.orgKey || config.orgId || config.OrgKey
+  if (orgKey) {
+    ORG_KEY = orgKey
   }
   return {
     getFolder(id) {
