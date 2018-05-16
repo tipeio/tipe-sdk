@@ -57,3 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+
+/dist/
+/node_modules/
+/.build/
+/.nuxt/
+/.cache/
