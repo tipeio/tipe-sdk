@@ -1,21 +1,21 @@
 {
-  "name": "node-tipe",
+  "name": "tipe.js",
   "version": "0.0.0",
-  "description": "Tipe client for Node.js",
+  "description": "Tipe client for JavaScript and Node.js",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tipeio/node-tipe.git"
+    "url": "git+https://github.com/tipeio/tipe.js.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tipeio/node-tipe/issues"
+    "url": "https://github.com/tipeio/tipe.js/issues"
   },
-  "homepage": "https://github.com/tipeio/node-tipe#readme",
+  "homepage": "https://github.com/tipeio/tipe.js#readme",
   "devDependencies": {
     "@vue/eslint-config-standard": "^3.0.0-beta.10",
     "babel-eslint": "^8.2.3",
