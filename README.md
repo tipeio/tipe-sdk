@@ -14,15 +14,15 @@ const tipe = createClient({
   orgKey: '...'
 })
 
-
-const folder = await tipe.query(`
+const folderQuery = `
   query API {
     Folder() {
       id
       name
     }
   }
-`)
+`
+const folder = await tipe.query(folderQuery)
 ```
 
 REST
