@@ -1,6 +1,6 @@
 {
   "name": "tipe.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tipe client for JavaScript and Node.js",
   "browser": "dist/index.js",
   "main": "dist/index.cjs.js",
