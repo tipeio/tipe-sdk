@@ -14,13 +14,25 @@ describe('Client', () => {
     const message = 'query: not implemented'
     expect(() => client.query()).toThrow(new Error(message))
   })
+  test('should throw error when fetch not implemented', () => {
+    const message = 'fetch: not implemented'
+    expect(() => client.fetch()).toThrow(new Error(message))
+  })
   test('should throw error when folder not implemented', () => {
     const message = 'folder: not implemented'
     expect(() => client.folder()).toThrow(new Error(message))
   })
+  test('should throw error when folders not implemented', () => {
+    const message = 'folders: not implemented'
+    expect(() => client.folders()).toThrow(new Error(message))
+  })
   test('should throw error when document not implemented', () => {
     const message = 'document: not implemented'
     expect(() => client.document()).toThrow(new Error(message))
+  })
+  test('should throw error when documents not implemented', () => {
+    const message = 'documents: not implemented'
+    expect(() => client.documents()).toThrow(new Error(message))
   })
 })
 

@@ -4,11 +4,20 @@ export class Client {
   query() {
     throw new Error('query: not implemented')
   }
+  fetch() {
+    throw new Error('fetch: not implemented')
+  }
   folder() {
     throw new Error('folder: not implemented')
   }
+  folders() {
+    throw new Error('folders: not implemented')
+  }
   document() {
     throw new Error('document: not implemented')
+  }
+  documents() {
+    throw new Error('documents: not implemented')
   }
 }
 
