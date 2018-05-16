@@ -7,24 +7,29 @@ export class Client {
   folder() {
     throw new Error('folder: not implemented')
   }
-  document(id) {
+  document() {
     throw new Error('document: not implemented')
   }
 }
 
 export class RestClient extends Client {
-  construtcor(protocol, orgKey, apiKey) {
-    this._orgKey = orgKey
-    this._apiKey = apiKey
+  constructor(config) {
+    super()
+    this._apiUrl = config.apiUrl
+    this._version = config.version
+    this._orgKey = config.orgKey
+    this._apiKey = config.apiKey
+    this._published = config.published
   }
-  _createUrl(type, id, published) {
+  _createUrl(type, id) {
     return (
-      'https://api.tipe.io/' +
-      (published ? 'published/' : '') +
-      'api/v1/' +
-      type +
+      (this._apiUrl || 'https://api.tipe.io/') +
+      (this._published ? 'published/' : '') +
+      'api/v' +
+      (this._version || '1') +
       '/' +
-      id
+      type +
+      (id ? '/' + id : '')
     )
   }
   fetch(url) {
@@ -32,6 +37,12 @@ export class RestClient extends Client {
   }
   folder(id) {
     return tipeFetch(this._createUrl('folder', id), this._orgKey, this._apiKey)
+  }
+  folders() {
+    return tipeFetch(this._createUrl('folders'), this._orgKey, this._apiKey)
+  }
+  documents() {
+    return tipeFetch(this._createUrl('documents'), this._orgKey, this._apiKey)
   }
   document(id) {
     return tipeFetch(
@@ -43,14 +54,20 @@ export class RestClient extends Client {
 }
 
 export class GraphqlClient extends Client {
-  construtcor(config) {
+  constructor(config) {
+    super()
+    this._apiUrl = config.apiUrl
     this._orgKey = config.orgKey
     this._apiKey = config.apiKey
     this._published = config.published
   }
   _createUrl() {
     const published = this._published
-    return 'https://api.tipe.io/' + (published ? 'published/' : '') + 'graphql'
+    return (
+      (this._apiUrl || 'https://api.tipe.io/') +
+      (published ? 'published/' : '') +
+      'graphql'
+    )
   }
   query(query, variables) {
     const body = { query }
