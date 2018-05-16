@@ -2,8 +2,11 @@
   "name": "tipe.js",
   "version": "0.0.0",
   "description": "Tipe client for JavaScript and Node.js",
-  "main": "src/index.js",
+  "browser": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
   "scripts": {
+    "build": "rollup -c",
     "test": "jest",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest"
   },
@@ -11,8 +14,8 @@
     "type": "git",
     "url": "git+https://github.com/tipeio/tipe.js.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "PatrickJS <patrick@tipe.io>",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/tipeio/tipe.js/issues"
   },
@@ -34,7 +37,10 @@
     "eslint-plugin-vue": "^4.5.0",
     "jest": "^22.4.3",
     "prettier": "^1.12.1",
-    "regenerator-runtime": "^0.11.1"
+    "regenerator-runtime": "^0.11.1",
+    "rollup": "^0.59.1",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-node-resolve": "^3.3.0"
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1"
