@@ -12,7 +12,8 @@
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest",
     "preversion": "npm test",
     "version": "npm run build",
-    "postversion": "git push origin master && git push --tags && npm run prebuild"
+    "postversion": "git push origin master && git push --tags && npm run prebuild",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
