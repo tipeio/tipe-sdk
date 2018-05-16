@@ -8,7 +8,10 @@
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
-    "test:debug": "node --inspect-brk ./node_modules/.bin/jest"
+    "test:debug": "node --inspect-brk ./node_modules/.bin/jest",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags && rm -rf dist"
   },
   "repository": {
     "type": "git",
