@@ -18,7 +18,14 @@
     "type": "git",
     "url": "git+https://github.com/tipeio/tipe.js.git"
   },
-  "author": "PatrickJS <patrick@tipe.io>",
+  "contributors": [
+    "PatrickJS <patrick@tipe.io>",
+    "Scott Moss <scott@tipe.io>",
+    "Mike Moss <mike@tipe.io>"
+  ],
+  "engines": {
+    "node": ">=8"
+  },
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/tipeio/tipe.js/issues"
