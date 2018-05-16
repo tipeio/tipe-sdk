@@ -1,17 +1,18 @@
 {
   "name": "tipe.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Tipe client for JavaScript and Node.js",
   "browser": "dist/index.js",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "scripts": {
+    "prebuild": "rm -rf dist",
     "build": "rollup -c",
     "test": "jest",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest",
     "preversion": "npm test",
-    "version": "npm run build && git add -A dist",
-    "postversion": "git push && git push --tags && rm -rf dist"
+    "version": "npm run build",
+    "postversion": "git push && git push --tags && npm run prebuild"
   },
   "repository": {
     "type": "git",
