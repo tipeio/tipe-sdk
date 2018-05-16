@@ -2,6 +2,8 @@
 Tipe client for JavaScript and Node.js
 
 
+
+GraphQL
 ```js
 import { createClient } from 'tipe.js'
 
@@ -23,6 +25,7 @@ const folder = await tipe.query(`
 `)
 ```
 
+REST
 ```js
 import { createClient } from 'tipe.js'
 
