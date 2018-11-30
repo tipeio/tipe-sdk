@@ -6,9 +6,9 @@ export default class Client {
   constructor(config: any) {
     this.config = config
   }
-  private _fetch = (type: string, params: any) => {
-    const domain = this.config.domain || 'https://tipe.io'
-    const url = `/api/${this.config.project}/${type}`
+  private fetch = (type: string, params: any) => {
+    const domain = this.config.domain || 'https://api.tipe.io'
+    const url = `/api/${this.config.project}/sdk`
     const body = JSON.stringify(params)
     const headers = {
       'Accept': 'application/json',
@@ -36,19 +36,19 @@ export default class Client {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    return this._fetch('document', values)
+    return this.fetch('document', values)
   }
   page = (values: any) => {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    return this._fetch('page', values)
+    return this.fetch('page', values)
   }
   asset = (values: any) => {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    return this._fetch('asset', values)
+    return this.fetch('asset', values)
   }
 }
 
