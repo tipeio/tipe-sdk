@@ -27,6 +27,9 @@ export default class Client {
     return promise
   }
   document = (values: any) => {
+    if (typeof values === 'string') {
+      values = {id: values}
+    }
     const params = Object.keys(values).reduce((mem, param) => {
       return mem + param + '=' + values[param]
     }, '?')

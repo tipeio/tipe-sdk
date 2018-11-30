@@ -1,42 +1,17 @@
-# tipe.js
+# @tipe/client
 Tipe client for JavaScript and Node.js
 
 
-
-GraphQL
 ```js
-import { createClient } from 'tipe.js'
+import { createClient } from '@tipe/client'
 
 
 const tipe = createClient({
-  type: 'graphql',
-  apiKey: '...',
-  orgKey: '...'
+  project: '...',
+  key: '...'
 })
 
-const folderQuery = `
-  query API {
-    Folder() {
-      id
-      name
-    }
-  }
-`
-const folder = await tipe.query(folderQuery)
-```
-
-REST
-```js
-import { createClient } from 'tipe.js'
-
-
-const tipe = createClient({
-  type: 'rest',
-  apiKey: '...',
-  orgKey: '...'
+tipe.document({
+  id: '78979898'
 })
-
-
-const homeFolderId = 'f1aa3515-8078-445c-a497-50aff28523ef'
-const folder = await tipe.folder(homeFolderId)
 ```
