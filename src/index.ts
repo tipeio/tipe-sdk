@@ -6,13 +6,17 @@ export default class Client {
   constructor(config: any) {
     this.config = config
   }
-  private fetch = (type: string, params: any) => {
-    const domain = this.config.domain || 'https://api.tipe.io'
-    const url = `/api/${this.config.project}/sdk`
+  private fetch = (type: string, params: any, opt = {}) => {
+    const config = {
+      ...this.config,
+      ...opt
+    }
+    const domain = config.domain || 'https://api.tipe.io'
+    const url = `/api/${config.project}/sdk`
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
-      Authorization: this.config.key
+      Authorization: config.key
     }
     const options = {
       method: 'POST',
@@ -22,7 +26,7 @@ export default class Client {
         type
       }),
       cache: 'no-cache',
-      timeout: this.config.timeout || 5000
+      timeout: config.timeout || 5000
     }
     const promise = fetch(`${domain}${url}`, options)
     .then(res => {
@@ -34,23 +38,23 @@ export default class Client {
 
     return promise
   }
-  document = (values: any) => {
+  document = (values: any, options = {}) => {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    return this.fetch('document', values)
+    return this.fetch('document', values, options)
   }
-  page = (values: any) => {
+  page = (values: any, options = {}) => {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    return this.fetch('page', values)
+    return this.fetch('page', values, options)
   }
-  asset = (values: any) => {
+  asset = (values: any, options = {}) => {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    return this.fetch('asset', values)
+    return this.fetch('asset', values, options)
   }
 }
 
