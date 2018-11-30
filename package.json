@@ -5,19 +5,19 @@
   "browser": "dist/index.js",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
+  "typings": "dist/_types/index.d.ts",
   "scripts": {
     "prebuild": "rm -rf dist",
-    "build": "rollup -c",
+    "build": "tsc --module commonjs",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest",
-    "preversion": "npm test",
-    "version": "npm run build",
-    "postversion": "git push origin master && git push --tags && npm run prebuild",
-    "prepublishOnly": "npm run build"
+    "ci": "yarn lint && yarn test --coverage --no-cache",
+    "preversion": "npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tipeio/tipe.js.git"
+    "url": "git+https://github.com/tipeio/tipe-client.git"
   },
   "contributors": [
     "PatrickJS <patrick@tipe.io>",
@@ -29,10 +29,13 @@
   },
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/tipeio/tipe.js/issues"
+    "url": "https://github.com/tipeio/tipe-client/issues"
   },
-  "homepage": "https://github.com/tipeio/tipe.js#readme",
+  "homepage": "https://github.com/tipeio/tipe-client#readme",
   "devDependencies": {
+    "@types/jest": "^23.3.9",
+    "@types/lodash": "^4.14.118",
+    "@types/node": "^10.12.7",
     "@vue/eslint-config-standard": "^3.0.0-beta.10",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -52,9 +55,16 @@
     "regenerator-runtime": "^0.11.1",
     "rollup": "^0.59.1",
     "rollup-plugin-commonjs": "^9.1.3",
-    "rollup-plugin-node-resolve": "^3.3.0"
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "ts-jest": "^23.10.4",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.16.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.1.6"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1"
+    "@types/node-fetch": "^2.1.4",
+    "isomorphic-fetch": "^2.2.1",
+    "node-fetch": "^2.3.0"
   }
 }
