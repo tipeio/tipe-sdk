@@ -12,17 +12,23 @@ export default class Client {
     const body = JSON.stringify(params)
     const headers = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
       Authorization: this.config.key
     }
     const options = {
       method: 'POST',
       headers,
       body,
+      cache: 'no-cache',
       timeout: this.config.timeout || 5000
     }
     const promise = fetch(`${domain}${url}`, options)
-    .then()
+    .then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+      return Promise.reject(res)
+    })
 
     return promise
   }
