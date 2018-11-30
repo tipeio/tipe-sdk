@@ -14,4 +14,7 @@ const tipe = createClient({
 tipe.document({
   id: '78979898'
 })
+.then(data => {
+  console.log(data)
+})
 ```
