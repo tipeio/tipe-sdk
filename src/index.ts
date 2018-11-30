@@ -6,10 +6,10 @@ export default class Client {
   constructor(config: any) {
     this.config = config
   }
-  private _fetch = (params: string) => {
+  private _fetch = (type: string, params: any) => {
     const domain = this.config.domain || 'https://tipe.io'
-    const url = `/api/${this.config.project}${params}`
-    const body = JSON.stringify({})
+    const url = `/api/${this.config.project}/${type}`
+    const body = JSON.stringify(params)
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -30,28 +30,19 @@ export default class Client {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    const params = Object.keys(values).reduce((mem, param) => {
-      return mem + param + '=' + values[param]
-    }, '?')
-    return this._fetch(`/document${params}`)
+    return this._fetch('document', values)
   }
   page = (values: any) => {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    const params = Object.keys(values).reduce((mem, param) => {
-      return mem + param + '=' + values[param]
-    }, '?')
-    return this._fetch(`/page${params}`)
+    return this._fetch('page', values)
   }
   asset = (values: any) => {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    const params = Object.keys(values).reduce((mem, param) => {
-      return mem + param + '=' + values[param]
-    }, '?')
-    return this._fetch(`/asset${params}`)
+    return this._fetch('asset', values)
   }
 }
 
