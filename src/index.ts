@@ -9,7 +9,6 @@ export default class Client {
   private fetch = (type: string, params: any) => {
     const domain = this.config.domain || 'https://api.tipe.io'
     const url = `/api/${this.config.project}/sdk`
-    const body = JSON.stringify(params)
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
@@ -18,7 +17,10 @@ export default class Client {
     const options = {
       method: 'POST',
       headers,
-      body,
+      body: JSON.stringify({
+        params,
+        type
+      }),
       cache: 'no-cache',
       timeout: this.config.timeout || 5000
     }
