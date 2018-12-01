@@ -9,7 +9,7 @@
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "tsc --module commonjs",
-    "test": "jest",
+    "test": "jest --verbose false",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest",
     "ci": "yarn lint && yarn test --coverage --no-cache",
