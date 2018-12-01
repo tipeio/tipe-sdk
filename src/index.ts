@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+const stringify: (obj: any) => string = require('fast-json-stable-stringify')
 
 export default class Client {
   config: any
@@ -18,13 +19,14 @@ export default class Client {
       'Content-Type': 'application/json; charset=utf-8',
       Authorization: config.key
     }
+    const body = stringify({
+      params,
+      type
+    })
     const options = {
       method: 'POST',
       headers,
-      body: JSON.stringify({
-        params,
-        type
-      }),
+      body,
       cache: 'no-cache',
       timeout: config.timeout || 5000
     }
