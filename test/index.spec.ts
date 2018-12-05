@@ -4,6 +4,7 @@ jest.mock('node-fetch', () => {
     // sync promise
     const promise = {
       then(fn: any) {
+        options.body = JSON.parse(options.body)
         return fn([url, options])
         return promise
       },
@@ -35,7 +36,7 @@ describe('Tipe', () => {
       id: '555'
     }).then(([url, options]) => {
       expect(url).toEqual('yolo.com/api/090909/sdk')
-      expect(JSON.parse(options.body).type).toEqual('document')
+      expect(options.body.type).toEqual('document')
     })
     .catch(() => {})
   })
@@ -49,7 +50,7 @@ describe('Tipe', () => {
       id: '555'
     }).then(([url, options]) => {
       expect(url).toEqual('yolo.com/api/090909/sdk')
-      expect(JSON.parse(options.body).type).toEqual('asset')
+      expect(options.body.type).toEqual('asset')
     })
     .catch(() => {})
   })
@@ -63,7 +64,7 @@ describe('Tipe', () => {
       id: '555'
     }).then(([url, options]) => {
       expect(url).toEqual('yolo.com/api/090909/sdk')
-      expect(JSON.parse(options.body).type).toEqual('page')
+      expect(options.body.type).toEqual('page')
     })
     .catch(() => {})
   })
