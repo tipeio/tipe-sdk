@@ -1,11 +1,14 @@
 import Tipe, { createClient } from '../src'
+
 jest.mock('node-fetch', () => {
   return function(url: string, options: any) {
     // sync promise
     const promise = {
       then(fn: any) {
-        options.body = JSON.parse(options.body)
-        return fn([url, options])
+        fn([url, {
+          ...options,
+          body: JSON.parse(options.body)
+        }])
         return promise
       },
       catch(fn?: any) {
@@ -15,9 +18,7 @@ jest.mock('node-fetch', () => {
     return promise
   }
 })
-console.log = s => {
-  process.stdout.write(s + "\n")
-}
+
 describe('Tipe', () => {
   test('should work', () => {
     expect(Tipe).not.toBe(undefined)
