@@ -48,7 +48,6 @@
   "dependencies": {
     "@types/node-fetch": "^2.1.4",
     "fast-json-stable-stringify": "^2.0.0",
-    "isomorphic-fetch": "^2.2.1",
     "node-fetch": "^2.3.0"
   },
   "jest": {
