@@ -1,13 +1,16 @@
 import fetch from 'node-fetch'
 const stringify: (obj: any) => string = require('fast-json-stable-stringify')
 
+type IParams = {[key: string]: string}
+type IOPtions = {[key: string]: string}
+
 export default class Client {
   config: any
   static createClient = createClient
   constructor(config: any) {
     this.config = config
   }
-  private fetch = (type: string, params: any, opt = {}) => {
+  private fetch = (type: string, params: IParams, opt: IOPtions = {}) => {
     const config = {
       ...this.config,
       ...opt
@@ -40,27 +43,32 @@ export default class Client {
 
     return promise
   }
-  document = (values: any, options = {}) => {
-    if (typeof values === 'string') {
-      values = {id: values}
-    }
-    return this.fetch('document', values, options)
+  get = (type: string, values: IParams, options: IOPtions = {}) => {
+    return this.fetch(type, values, options)
   }
-  page = (values: any, options = {}) => {
+  shape = (values: IParams, options: IOPtions = {}) => {
+    type IOPtions = {[key: string]: string}
     if (typeof values === 'string') {
       values = {id: values}
     }
-    return this.fetch('page', values, options)
+    return this.fetch('Shape', values, options)
   }
-  asset = (values: any, options = {}) => {
+  page = (values: IParams, options: IOPtions = {}) => {
     if (typeof values === 'string') {
       values = {id: values}
     }
-    return this.fetch('asset', values, options)
+    return this.fetch('Page', values, options)
+  }
+  asset = (values: IParams, options: IOPtions = {}) => {
+    if (typeof values === 'string') {
+      values = {id: values}
+    }
+    return this.fetch('Asset', values, options)
   }
 }
 
-export function createClient (config: any) {
+export function createClient (config: IParams) {
+  type IOPtions = {[key: string]: string}
   return new Client(config)
 }
 

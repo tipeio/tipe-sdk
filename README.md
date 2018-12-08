@@ -11,7 +11,14 @@ const tipe = createClient({
   key: '60cfbce5-0728-4ff2-884b-37ef8d8dde18'
 })
 
-tipe.document({
+tipe.get('Author', {
+  id: 'da340b78-9eed-4505-b545-c13266cf2899'
+})
+.then(data => {
+  console.log(data)
+})
+
+tipe.shape({
   id: 'da340b78-9eed-4505-b545-c13266cf2899'
 })
 .then(data => {
