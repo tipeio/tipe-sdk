@@ -1,23 +1,26 @@
 {
   "name": "tipe.js",
-  "version": "0.0.3",
+  "version": "0.0.0-development",
   "description": "Tipe client for JavaScript and Node.js",
   "browser": "dist/index.js",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "typings": "dist/_types/index.d.ts",
   "scripts": {
+    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rm -rf dist",
     "build": "tsc --module commonjs",
     "test": "jest --detectOpenHandles",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest",
     "ci": "yarn lint && yarn test --coverage --no-cache",
-    "preversion": "npm test"
+    "preversion": "npm test",
+    "travis-deploy-once": "travis-deploy-once --pro",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tipeio/tipe-client.git"
+    "url": "https://github.com/tipeio/tipe-client.git"
   },
   "contributors": [
     "PatrickJS <patrick@tipe.io>",
@@ -37,18 +40,87 @@
     "@types/lodash": "^4.14.118",
     "@types/node": "^10.12.7",
     "@vue/eslint-config-standard": "^3.0.0-beta.10",
+    "husky": "^1.2.0",
     "jest": "^23.6.0",
+    "lint-staged": "^8.1.0",
     "regenerator-runtime": "^0.11.1",
     "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.16.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.1.6"
+    "typescript": "^3.1.6",
+    "travis-deploy-once": "^5.0.10",
+    "semantic-release": "^15.12.5"
   },
   "dependencies": {
     "@types/node-fetch": "^2.1.4",
     "fast-json-stable-stringify": "^2.0.0",
     "node-fetch": "^2.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "yarn lint --fix",
+      "git add"
+    ]
+  },
+  "release": {
+    "verifyConditions": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ],
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      {
+        "path": "@semantic-release/git",
+        "assets": [
+          "package.json",
+          "CHANGELOG.md"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    "publish": [
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ],
+    "analyzeCommits": {
+      "preset": "angular",
+      "releaseRules": [
+        {
+          "type": "docs",
+          "scope": "README",
+          "release": "patch"
+        },
+        {
+          "type": "refactor",
+          "release": "patch"
+        },
+        {
+          "type": "style",
+          "release": "patch"
+        },
+        {
+          "type": "chore",
+          "scope": "deps",
+          "release": "patch"
+        }
+      ],
+      "parserOpts": {
+        "noteKeywords": [
+          "BREAKING CHANGE",
+          "BREAKING CHANGES",
+          "BREAKING"
+        ]
+      }
+    }
   },
   "jest": {
     "transform": {
@@ -73,5 +145,8 @@
       "src/*.{js,ts}",
       "!src/**/*.d.ts"
     ]
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }
