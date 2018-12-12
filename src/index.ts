@@ -1,31 +1,43 @@
 import fetch from 'node-fetch'
-const stringify: (obj: any) => string = require('fast-json-stable-stringify')
-
-type IParams = {[key: string]: string}
-type IOPtions = {[key: string]: string}
+import { ITipeClientOptions, ITipeParams, APIFetcher } from './type'
+import stringify from 'fast-json-stable-stringify'
 
 export default class Client {
-  config: any
-  static createClient = createClient
-  constructor(config: any) {
+  public static createClient = createClient
+  public config: ITipeClientOptions
+
+  constructor(config: ITipeClientOptions) {
     this.config = config
   }
-  private fetch = (type: string, params: IParams, opt: IOPtions = {}) => {
+
+  public getDocuments = (shape: string, searchFields: ITipeParams = {}, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+    return this.api('/documents', {shape, fields: searchFields}, options)
+  }
+
+  public getDocumentById = (id: string, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+    return this.api('/documentbyid', {fields: {id}}, options)
+  }
+
+  public getPageByParams = (page: string, params: ITipeParams): Promise<{[key: string]: any}> => {
+    return this.api('/page', {page, fields: params})
+  }
+
+  public api: APIFetcher = (path, contentConfig, fetchConfig) => {
     const config = {
       ...this.config,
-      ...opt
+      ...fetchConfig
     }
+
     const domain = config.domain || 'https://api.tipe.io'
-    const url = `/api/${config.project}/sdk`
+    const url = `/api/${config.project}/${path.split('/').pop()}`
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
       Authorization: config.key
     }
-    const body = stringify({
-      params,
-      type
-    })
+
+    const body = stringify(contentConfig)
+
     const options = {
       method: 'POST',
       headers,
@@ -33,42 +45,17 @@ export default class Client {
       cache: 'no-cache',
       timeout: config.timeout || 5000
     }
-    const promise = fetch(`${domain}${url}`, options)
+
+    return fetch(`${domain}${url}`, options)
     .then(res => {
       if (res.ok) {
         return res.json()
       }
       return Promise.reject(res)
     })
-
-    return promise
-  }
-  get = (type: string, values: IParams, options: IOPtions = {}) => {
-    return this.fetch(type, values, options)
-  }
-  shape = (values: IParams, options: IOPtions = {}) => {
-    type IOPtions = {[key: string]: string}
-    if (typeof values === 'string') {
-      values = {id: values}
-    }
-    return this.fetch('Shape', values, options)
-  }
-  page = (values: IParams, options: IOPtions = {}) => {
-    if (typeof values === 'string') {
-      values = {id: values}
-    }
-    return this.fetch('Page', values, options)
-  }
-  asset = (values: IParams, options: IOPtions = {}) => {
-    if (typeof values === 'string') {
-      values = {id: values}
-    }
-    return this.fetch('Asset', values, options)
   }
 }
 
-export function createClient (config: IParams) {
-  type IOPtions = {[key: string]: string}
+export function createClient (config: ITipeClientOptions) {
   return new Client(config)
 }
-
