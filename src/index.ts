@@ -10,16 +10,12 @@ export default class Client {
     this.config = config
   }
 
-  public getDocuments = (shape: string, searchFields: ITipeParams = {}, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
-    return this.api('/documents', {shape, fields: searchFields}, options)
+  public getDocumentsByType = (type: string, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+    return this.api(`documents/${type}`, {fields: {}}, options)
   }
 
   public getDocumentById = (id: string, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
-    return this.api('/documentbyid', {fields: {id}}, options)
-  }
-
-  public getPageByParams = (page: string, params: ITipeParams): Promise<{[key: string]: any}> => {
-    return this.api('/page', {page, fields: params})
+    return this.api(`document/${id}`, {fields: {}}, options)
   }
 
   public api: APIFetcher = (path, contentConfig, fetchConfig) => {
@@ -29,7 +25,7 @@ export default class Client {
     }
 
     const domain = config.domain || 'https://api.tipe.io'
-    const url = `/api/${config.project}/${path.split('/').pop()}`
+    const url = `/api/${config.project}/${path}`
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json; charset=utf-8',
@@ -39,7 +35,7 @@ export default class Client {
     const body = stringify(contentConfig)
 
     const options = {
-      method: 'POST',
+      method: 'GET',
       headers,
       body,
       cache: 'no-cache',
