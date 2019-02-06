@@ -11,30 +11,19 @@ const tipe = createClient({
   key: '60cfbce5-0728-4ff2-884b-37ef8d8dde18'
 })
 
-tipe.get('Author', {
-  id: 'da340b78-9eed-4505-b545-c13266cf2899'
-})
+tipe.getDocumentsByType('Author')
 .then(data => {
+  // data = []
   console.log(data)
 })
 
-tipe.shape({
-  id: 'da340b78-9eed-4505-b545-c13266cf2899'
-})
+tipe.getDocumentById('b2d1e408aafd574a')
 .then(data => {
+  // data = {}
   console.log(data)
 })
 
-tipe.page({
-  id: 'b2d1e408-7f57-4146-8471-23dfaafd574a'
-})
-.then(data => {
-  console.log(data)
-})
-
-tipe.asset({
-  id: '5712c7e2-df2f-43b3-94b2-f5c999d7ddd6'
-})
+tipe.getDocumentsByType('Asset')
 .then(data => {
   console.log(data)
 })
