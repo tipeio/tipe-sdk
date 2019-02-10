@@ -10,8 +10,8 @@ export default class Client {
     this.config = config
   }
 
-  public getDocumentsByType = (type: string, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
-    return this.api(`documents/${type}`, {fields: {}}, options)
+  public getDocumentsByType = (shape: string, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+    return this.api(`documents/${shape}`, {fields: {}}, options)
   }
 
   public getDocumentById = (id: string, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
