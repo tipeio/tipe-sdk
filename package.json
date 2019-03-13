@@ -2,6 +2,7 @@
   "name": "tipe.js",
   "version": "0.0.2",
   "description": "Tipe client for JavaScript and Node.js",
+  "license": "Apache-2.0",
   "browser": "dist/index.js",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -32,7 +33,6 @@
   "engines": {
     "node": ">=8"
   },
-  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/tipeio/tipe-sdk/issues"
   },
