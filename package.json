@@ -1,5 +1,5 @@
 {
-  "name": "tipe.js",
+  "name": "@tipe/js-sdk",
   "version": "0.0.2",
   "description": "Tipe client for JavaScript and Node.js",
   "license": "Apache-2.0",
