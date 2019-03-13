@@ -1,6 +1,6 @@
 {
   "name": "tipe.js",
-  "version": "0.0.0-development",
+  "version": "0.0.2",
   "description": "Tipe client for JavaScript and Node.js",
   "browser": "dist/index.js",
   "main": "dist/index.cjs.js",
@@ -27,16 +27,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tipeio/tipe-client.git"
+    "url": "https://github.com/tipeio/tipe-sdk.git"
   },
   "engines": {
     "node": ">=8"
   },
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/tipeio/tipe-client/issues"
+    "url": "https://github.com/tipeio/tipe-sdk/issues"
   },
-  "homepage": "https://github.com/tipeio/tipe-client#readme",
+  "homepage": "https://github.com/tipeio/tipe-sdk#readme",
   "devDependencies": {
     "@types/jest": "^23.3.9",
     "@types/lodash": "^4.14.118",
