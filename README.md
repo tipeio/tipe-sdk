@@ -1,9 +1,9 @@
-# @tipe/client
+# @tipe/js-sdk
 Tipe client for JavaScript and Node.js
 
 
 ```js
-import { createClient } from '@tipe/client'
+import { createClient } from '@tipe/js-sdk'
 
 
 const tipe = createClient({
