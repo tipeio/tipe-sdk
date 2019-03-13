@@ -1,6 +1,6 @@
 {
   "name": "@tipe/js-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Tipe client for JavaScript and Node.js",
   "license": "Apache-2.0",
   "browser": "dist/index.js",
