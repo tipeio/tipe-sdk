@@ -1,5 +1,6 @@
-import fetch from 'node-fetch'
+import axios from 'axios'
 import { ITipeClientOptions, APIFetcher } from './type'
+
 import stringify from 'fast-json-stable-stringify'
 
 export default class Client {
@@ -46,13 +47,11 @@ export default class Client {
       timeout: config.timeout || 5000
     }
 
-    return fetch(`${domain}${url}`, options)
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(res)
-    })
+    return axios({...options, url: `${domain}${url}`})
+      .then(res => res)
+      .catch(err => {
+        return Promise.reject(err)
+      })
   }
 }
 
