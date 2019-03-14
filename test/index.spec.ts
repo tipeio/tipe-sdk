@@ -1,9 +1,7 @@
-jest.mock('node-fetch')
 import Tipe, { createClient } from '../src'
 import stringify from 'fast-json-stable-stringify'
-import fetch from 'node-fetch'
-
-const mockedFetch = fetch as jest.Mock<typeof fetch>
+import axios from "axios"
+jest.mock("axios");
 
 describe('Tipe', () => {
   describe('client', () => {
@@ -67,14 +65,6 @@ describe('Tipe', () => {
   describe('api', () => {
     test('formats the correct request', async () => {
       const expectedResult = {data: {}}
-      const httpResponse = {
-        ok: true,
-        json() {
-          return expectedResult
-        }
-      }
-
-      mockedFetch.mockResolvedValue(httpResponse)
 
       const path = 'hello'
       const params = {fields: {name: 'Jason'}}
@@ -83,7 +73,9 @@ describe('Tipe', () => {
 
       const result = await tipe.api(path, params, config)
       const body = stringify(params)
-      expect(mockedFetch).toHaveBeenNthCalledWith(1, `https://api.tipe.io/api/${config.project}/${path}`, {
+
+      expect(axios).toHaveBeenNthCalledWith(1, {
+        url: `https://api.tipe.io/api/${config.project}/${path}`,
         body,
         method: 'GET',
         headers: {
@@ -94,8 +86,6 @@ describe('Tipe', () => {
         cache: 'no-cache',
         timeout: 5000
       })
-
-      expect(result).toBe(expectedResult)
     })
   })
 })
