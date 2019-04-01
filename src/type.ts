@@ -9,13 +9,8 @@ export interface ITipeParams {
   [key: string]: string
 }
 
-export interface ITipePageParams {
-  params: { [key: string]: string }
-  route: string
-}
-
 export interface IFetchConfig {
-  fields: {[key: string]: string} | ITipePageParams
+  fields: {[key: string]: string}
   shape?: string
   page?: string
 }

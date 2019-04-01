@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { ITipeClientOptions, ITipePageParams, APIFetcher } from './type'
+import { ITipeClientOptions, APIFetcher } from './type'
 import stringify from 'fast-json-stable-stringify'
 
 export default class Client {
@@ -18,8 +18,8 @@ export default class Client {
     return this.api(`document/${id}`, {fields: {}}, options)
   }
 
-  public getPage = (route: string, params: ITipePageParams,  options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
-    return this.api('page', {fields: params}, options)
+  public getPage = (route: string,  options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+    return this.api('page', {fields: { route }}, options)
   }
 
   public api: APIFetcher = (path, contentConfig, fetchConfig) => {
