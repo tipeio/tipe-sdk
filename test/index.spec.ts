@@ -49,6 +49,21 @@ describe('Tipe', () => {
     })
   })
 
+  describe('get page', () => {
+    test('calls api with correct args', async ()=> {
+      const options = {key: '1', project: '12'}
+      const tipe = new Tipe(options)
+      const expectedResults = {data: {}}
+      tipe.api = jest.fn().mockResolvedValue(expectedResults)
+
+      const route = 'blog/:title/:ok'
+      const results = await tipe.getPage(route, options)
+
+      expect(tipe.api).toHaveBeenNthCalledWith(1, 'page', {fields:{route}}, options)
+      expect(results).toBe(expectedResults)
+    })
+  })
+
   describe('api', () => {
     test('formats the correct request', async () => {
       const expectedResult = {data: {}}
