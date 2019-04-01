@@ -9,15 +9,20 @@ export interface ITipeParams {
   [key: string]: string
 }
 
-export interface IFetchCOnfig {
-  fields: {[key: string]: string}
+export interface ITipePageParams {
+  params: { [key: string]: string }
+  route: string
+}
+
+export interface IFetchConfig {
+  fields: {[key: string]: string} | ITipePageParams
   shape?: string
   page?: string
 }
 
 export type APIFetcher = (
   path: string,
-  contentConfig: IFetchCOnfig,
+  contentConfig: IFetchConfig,
   fetchConfig?: ITipeClientOptions
 ) => Promise<{[key: string]: any}>
 
