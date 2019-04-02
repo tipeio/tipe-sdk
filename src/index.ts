@@ -48,10 +48,6 @@ export default class Client {
     }
 
     return axios({...options, url: `${domain}${url}`})
-      .then(res => res)
-      .catch(err => {
-        return Promise.reject(err)
-      })
   }
 }
 
