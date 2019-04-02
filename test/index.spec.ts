@@ -56,7 +56,7 @@ describe('Tipe', () => {
       const expectedResults = {data: {}}
       tipe.api = jest.fn().mockResolvedValue(expectedResults)
 
-      const route = 'blog/:title/:ok'
+      const route = 'https://mysite.com/blog/learn-to-code/ye'
       const results = await tipe.getPage(route, options)
 
       expect(tipe.api).toHaveBeenNthCalledWith(1, 'page', {fields:{route}}, options)
