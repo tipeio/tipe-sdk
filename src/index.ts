@@ -1,5 +1,12 @@
 import axios from 'axios'
-import { ITipeClientPageOptions, ITipeClientOptions, APIFetcher } from './type'
+import {
+  ITipeClientOptions,
+  APIFetcher,
+  GetPageByTipeIdOptions,
+  GetPagesByTypeOptions,
+  GetPagesByParamsOptions,
+  GetPageByIdOptions
+} from './type'
 
 import stringify from 'fast-json-stable-stringify'
 declare var window: any
@@ -11,20 +18,28 @@ export default class Client {
     this.config = config
   }
 
-  public getPagesByType = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
-    return this.api(`POST`, `pagesByType`, {page: pageConfig.name, status: pageConfig.status}, options)
+  public getPagesByType = (pageConfig: GetPagesByTypeOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
+    return this.api('POST', 'pagesByType', pageConfig, options)
   }
 
-  public getPagesByParams = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
+  public getPagesByParams = (pageConfig: GetPagesByParamsOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
     if (window && window.location.href.split('?tipeId=')[1]) {
       const tipeParams = window.location.href.split('?tipeId=')[1]
-      return this.getPageById(tipeParams, { id: tipeParams }, options)
+      return this.getPageByTipeId({ id: tipeParams }, options)
     }
-    return this.api(`POST`, `pageByParams`, {page: pageConfig.name, routeParams: pageConfig.routeParams, status: pageConfig.status}, options)
+    return this.api('POST', 'pageByParams', pageConfig, options)
   }
 
-  public getPageById = (id: string, contentConfig: object,  options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
-    return this.api(`POST`, `pageById`, contentConfig, options)
+  public getPageById = (pageConfig: GetPageByIdOptions, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+    if (window && window.location.href.split('?tipeId=')[1]) {
+      const tipeParams = window.location.href.split('?tipeId=')[1]
+      return this.getPageByTipeId({ id: tipeParams }, options)
+    }
+    return this.api('POST', 'pageById', pageConfig, options)
+  }
+
+  public getPageByTipeId = (pageConfig: GetPageByTipeIdOptions,  options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+    return this.api('POST', 'pageByTipeId', pageConfig, options)
   }
 
   public api: APIFetcher = (restMethod = 'GET', path, contentConfig, fetchConfig) => {

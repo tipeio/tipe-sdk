@@ -1,11 +1,26 @@
-export interface ITipeClientPageOptions {
+export interface GetPagesByTypeOptions {
   name: string
-  status?: string,
-  routeParams?: {
+  status?: string
+}
+
+export interface GetPageByIdOptions {
+  id: string
+}
+
+export interface GetPagesByParamsOptions {
+  name: string
+  routeParams: {
     k: string
     v: string
   }
+  status?: string
 }
+
+export interface GetPageByTipeIdOptions {
+  id: string
+}
+
+
 export interface ITipeClientOptions {
   key: string
   project: string
