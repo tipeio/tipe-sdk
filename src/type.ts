@@ -1,3 +1,11 @@
+export interface ITipeClientPageOptions {
+  name: string
+  status?: string,
+  routeParams?: {
+    k: string
+    v: string
+  }
+}
 export interface ITipeClientOptions {
   key: string
   project: string
@@ -10,12 +18,13 @@ export interface ITipeParams {
 }
 
 export interface IFetchConfig {
-  fields: {[key: string]: string}
-  shape?: string
+  [key: string]: any
+  status?: string
   page?: string
 }
 
 export type APIFetcher = (
+  restMethod: string,
   path: string,
   contentConfig: IFetchConfig,
   fetchConfig?: ITipeClientOptions
