@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { ITipeClientOptions, APIFetcher } from './type'
+import { ITipeClientPageOptions, ITipeClientOptions, APIFetcher } from './type'
 
 import stringify from 'fast-json-stable-stringify'
-
+declare var window: any
 export default class Client {
   public static createClient = createClient
   public config: ITipeClientOptions
@@ -11,19 +11,23 @@ export default class Client {
     this.config = config
   }
 
-  public getDocumentsByType = (shape: string, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
-    return this.api(`documents/${shape}`, {fields: {}}, options)
+  public getPagesByType = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
+    return this.api(`POST`, `pagesByType`, {page: pageConfig.name, status: pageConfig.status}, options)
   }
 
-  public getDocumentById = (id: string, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
-    return this.api(`document/${id}`, {fields: {}}, options)
+  public getPagesByParams = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
+    if (window && window.location.href.split('?tipeId=')[1]) {
+      const tipeParams = window.location.href.split('?tipeId=')[1]
+      return this.getPageById(tipeParams, { id: tipeParams }, options)
+    }
+    return this.api(`POST`, `pageByParams`, {page: pageConfig.name, routeParams: pageConfig.routeParams, status: pageConfig.status}, options)
   }
 
-  public getPage = (route: string,  options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
-    return this.api('page', {fields: { route }}, options)
+  public getPageById = (id: string, contentConfig: object,  options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+    return this.api(`POST`, `pageById`, contentConfig, options)
   }
 
-  public api: APIFetcher = (path, contentConfig, fetchConfig) => {
+  public api: APIFetcher = (restMethod = 'GET', path, contentConfig, fetchConfig) => {
     const config = {
       ...this.config,
       ...fetchConfig
@@ -40,14 +44,15 @@ export default class Client {
     const body = stringify(contentConfig)
 
     const options = {
-      method: 'GET',
+      method: restMethod,
+      url: `${domain}${url}`,
       headers,
-      body,
+      data: body,
       cache: 'no-cache',
       timeout: config.timeout || 5000
     }
 
-    return axios({...options, url: `${domain}${url}`})
+    return axios(options)
   }
 }
 

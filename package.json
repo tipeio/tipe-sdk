@@ -10,7 +10,7 @@
     "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "precommit": "lint-staged && yarn test",
     "prebuild": "rm -rf dist",
-    "build": "tsc --module commonjs",
+    "build": "tsc",
     "test": "jest --detectOpenHandles",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest",
