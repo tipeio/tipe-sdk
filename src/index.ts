@@ -1,11 +1,10 @@
 import axios from 'axios'
 import {
   ITipeClientOptions,
+  ITipeClientPageOptions,
   APIFetcher,
-  GetPageByTipeIdOptions,
-  GetPagesByTypeOptions,
-  GetPagesByParamsOptions,
-  GetPageByIdOptions
+  IGetPageByTipeIdOptions,
+  IGetPageByIdOptions
 } from './type'
 
 import stringify from 'fast-json-stable-stringify'
@@ -26,15 +25,15 @@ export default class Client {
     return this.api(`POST`, `pagesByType`, {page: pageConfig.name, status: pageConfig.status}, options)
   }
 
-  public getPageByParams = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
+  public getPagesByParams = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
     if (window && window.location.href.split('?tipeId=')[1]) {
       const tipeParams = window.location.href.split('?tipeId=')[1]
-      return this.getPageByTipeId({ id: tipeParams }, options)
+      return this.getPageById(tipeParams, tipeParams)
     }
-    return this.api('POST', 'pageByParams', pageConfig, options)
+    return this.api(`POST`, `pageByParams`, {page: pageConfig.name, routeParams: pageConfig.routeParams, status: pageConfig.status}, options)
   }
 
-  public getPageById = (pageConfig: GetPageByIdOptions, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+  public getPageById = (pageConfig: IGetPageByIdOptions, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
     if (window && window.location.href.split('?tipeId=')[1]) {
       const tipeParams = window.location.href.split('?tipeId=')[1]
       return this.getPageByTipeId({ id: tipeParams }, options)
@@ -42,7 +41,7 @@ export default class Client {
     return this.api('POST', 'pageById', pageConfig, options)
   }
 
-  public getPageByTipeId = (pageConfig: GetPageByTipeIdOptions,  options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
+  public getPageByTipeId = (pageConfig: IGetPageByTipeIdOptions,  options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
     return this.api('POST', 'pageByTipeId', pageConfig, options)
   }
 

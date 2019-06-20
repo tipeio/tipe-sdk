@@ -1,13 +1,13 @@
-export interface GetPagesByTypeOptions {
+export interface IGetPagesByTypeOptions {
   name: string
   status?: string
 }
 
-export interface GetPageByIdOptions {
+export interface IGetPageByIdOptions {
   id: string
 }
 
-export interface GetPagesByParamsOptions {
+export interface IGetPagesByParamsOptions {
   name: string
   routeParams: {
     k: string
@@ -16,8 +16,17 @@ export interface GetPagesByParamsOptions {
   status?: string
 }
 
-export interface GetPageByTipeIdOptions {
+export interface IGetPageByTipeIdOptions {
   id: string
+}
+
+export interface ITipeClientPageOptions {
+  name: string
+  status?: string,
+  routeParams?: {
+    k: string
+    v: string
+  }
 }
 
 

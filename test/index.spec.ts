@@ -42,9 +42,9 @@ describe('Tipe', () => {
       tipe.api = jest.fn().mockResolvedValue(expectedResults)
 
       const id = 'the_id'
-      const results = await tipe.getPageById(id, {stuff: {}}, options)
+      const results = await tipe.getPageById({id}, options)
 
-      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pageById`, {stuff: {}}, options)
+      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pageById`, {id}, options)
       expect(results).toBe(expectedResults)
     })
   })
@@ -73,7 +73,7 @@ describe('Tipe', () => {
       
       tipe.api = jest.fn().mockResolvedValue(expectedResults)
 
-      const results = await tipe.getPageByParams(pageConfig, options)
+      const results = await tipe.getPagesByParams(pageConfig, options)
 
       expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pageByParams`, {page: 'asdf', routeParams: { k: 'key', v: 'val'}, status: 'DRAFT'}, options)
       expect(results).toBe(expectedResults)
