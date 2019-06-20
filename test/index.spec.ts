@@ -17,47 +17,65 @@ describe('Tipe', () => {
     })
   })
 
-  describe('document by id', () => {
-    test('calls api with correct args', async ()=> {
-      const options = {key: '1', project: '12'}
+  describe('pages by project id', () => {
+    test('calls api with correct args', async () => {
+      const projectId = 'asdf'
+      const options = {key: '1', project: projectId}
       const tipe = new Tipe(options)
       const expectedResults = {data: {}}
       tipe.api = jest.fn().mockResolvedValue(expectedResults)
 
       const id = 'the_id'
-      const results = await tipe.getDocumentById(id, options)
+      const results = await tipe.getPagesByProjectId(projectId)
 
-      expect(tipe.api).toHaveBeenNthCalledWith(1, `document/${id}`, {fields: {}}, options)
+      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pagesByProjectId`, {projectId})
       expect(results).toBe(expectedResults)
     })
   })
 
-  describe('document by type', () => {
+  describe('page by id', () => {
+    test('calls api with correct args', async () => {
+      const projectId = '12'
+      const options = {key: '1', project: projectId}
+      const tipe = new Tipe(options)
+      const expectedResults = {data: {}}
+      tipe.api = jest.fn().mockResolvedValue(expectedResults)
+
+      const id = 'the_id'
+      const results = await tipe.getPageById(id, {stuff: {}}, options)
+
+      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pageById`, {stuff: {}}, options)
+      expect(results).toBe(expectedResults)
+    })
+  })
+
+  describe('pages by type', () => {
     test('calls api with correct args', async ()=> {
       const options = {key: '1', project: '12'}
       const tipe = new Tipe(options)
       const expectedResults = {data: {}}
       tipe.api = jest.fn().mockResolvedValue(expectedResults)
 
-      const type = 'Type'
-      const results = await tipe.getDocumentsByType(type, options)
+      const type = {name: 'Blog', status: 'DRAFT'}
+      const results = await tipe.getPagesByType(type, options)
 
-      expect(tipe.api).toHaveBeenNthCalledWith(1, `documents/${type}`, {fields: {}}, options)
+      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pagesByType`, {page: type.name, status: type.status}, options)
       expect(results).toBe(expectedResults)
     })
   })
 
-  describe('get page', () => {
+  describe('page by params', () => {
     test('calls api with correct args', async ()=> {
-      const options = {key: '1', project: '12'}
+      const options = { key: '1', project: '12' }
+      const pageConfig = {name: 'asdf', routeParams: { k: 'key', v: 'val'}, status: 'DRAFT'}
       const tipe = new Tipe(options)
-      const expectedResults = {data: {}}
+      const expectedResults = { data: {} }
+      
       tipe.api = jest.fn().mockResolvedValue(expectedResults)
 
-      const route = 'https://mysite.com/blog/learn-to-code/ye'
-      const results = await tipe.getPage(route, options)
+      const results = await tipe.getPageByParams(pageConfig, options)
 
-      expect(tipe.api).toHaveBeenNthCalledWith(1, 'page', {fields:{route}}, options)
+      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pageByParams`, {page: 'asdf', routeParams: { k: 'key', v: 'val'}, status: 'DRAFT'}, options)
       expect(results).toBe(expectedResults)
     })
   })
@@ -71,12 +89,12 @@ describe('Tipe', () => {
       const config = {key: 'key', project: 'project'}
       const tipe = new Tipe(config)
 
-      const result = await tipe.api(path, params, config)
+      const result = await tipe.api('GET', path, params, config)
       const body = stringify(params)
 
       expect(axios).toHaveBeenNthCalledWith(1, {
         url: `https://api.tipe.io/api/${config.project}/${path}`,
-        body,
+        data: body,
         method: 'GET',
         headers: {
           Accept: 'application/json',

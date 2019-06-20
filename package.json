@@ -111,6 +111,13 @@
     }
   },
   "jest": {
+    "globals": {
+      "window": {
+        "location": {
+          "href": "asdfadsfasdf"
+        }
+      }
+    },
     "transform": {
       ".(ts|tsx)": "ts-jest"
     },
