@@ -25,8 +25,7 @@ describe('Tipe', () => {
       const expectedResults = {data: {}}
       tipe.api = jest.fn().mockResolvedValue(expectedResults)
 
-      const id = 'the_id'
-      const results = await tipe.getPagesByProjectId(projectId)
+      const results = await tipe.getPagesByProjectId()
 
       expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pagesByProjectId`, {projectId})
       expect(results).toBe(expectedResults)
