@@ -17,8 +17,8 @@ export default class Client {
     this.config = config
   }
 
-  public getPagesByProjectId = (projectId: string): Promise<{[key: string]: any}> => {
-    return this.api(`POST`, `pagesByProjectId`, { projectId })
+  public getPagesByProjectId = (): Promise<{[key: string]: any}> => {
+    return this.api(`POST`, `pagesByProjectId`, { projectId: this.config.project })
   }
 
   public getPagesByType = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {

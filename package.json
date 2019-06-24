@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "typings": "dist/_types/index.d.ts",
   "scripts": {
-    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts'",
+    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' -e '**/*.spec.ts'",
     "precommit": "lint-staged && yarn test",
     "prebuild": "rm -rf dist",
     "build": "tsc",
