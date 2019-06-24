@@ -8,7 +8,16 @@ import {
 } from './type'
 
 import stringify from 'fast-json-stable-stringify'
+
 declare var window: any
+
+const isBrowser = (): boolean => {
+  if(typeof window !== 'undefined') {
+  return true
+}
+  return false
+}
+
 export default class Client {
   public static createClient = createClient
   public config: ITipeClientOptions
@@ -26,7 +35,7 @@ export default class Client {
   }
 
   public getPagesByParams = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
-    if (window && window.location.href.split('?tipeId=')[1]) {
+    if (isBrowser() && window.location.href.includes('?tipeId=')) {
       const tipeParams = window.location.href.split('?tipeId=')[1]
       return this.getPageById(tipeParams, tipeParams)
     }
@@ -34,7 +43,7 @@ export default class Client {
   }
 
   public getPageById = (pageConfig: IGetPageByIdOptions, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {
-    if (window && window.location.href.split('?tipeId=')[1]) {
+    if (isBrowser() && window.location.href.includes('?tipeId=')) {
       const tipeParams = window.location.href.split('?tipeId=')[1]
       return this.getPageByTipeId({ id: tipeParams }, options)
     }
