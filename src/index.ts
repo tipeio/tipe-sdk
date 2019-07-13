@@ -18,15 +18,15 @@ export default class Client {
   }
 
   public getPagesByProjectId = (): Promise<{[key: string]: any}> => {
-    return this.api(`POST`, `pagesByProjectId`, { projectId: this.config.project })
+    return this.api('POST', 'pagesByProjectId', { projectId: this.config.project })
   }
 
-  public getPagesByType = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
-    return this.api(`POST`, `pagesByType`, {page: pageConfig.name, status: pageConfig.status}, options)
+  public getPagesByTemplate = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
+    return this.api('POST', 'pagesByTemplate', pageConfig, options)
   }
 
-  public getPagesByParams = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
-    return this.api(`POST`, `pageByParams`, {page: pageConfig.name, routeParams: pageConfig.routeParams, status: pageConfig.status}, options)
+  public getPagesByParam = (pageConfig: ITipeClientPageOptions, options?: ITipeClientOptions): Promise<{ [key: string]: any }> => {
+    return this.api('POST', 'pageByParam', pageConfig, options)
   }
 
   public getPageById = (pageConfig: IGetPageByIdOptions, options?: ITipeClientOptions): Promise<{[key: string]: any}> => {

@@ -1,5 +1,5 @@
 export interface IGetPagesByTypeOptions {
-  name: string
+  template: string
   status?: string
 }
 
@@ -7,12 +7,9 @@ export interface IGetPageByIdOptions {
   id: string
 }
 
-export interface IGetPagesByParamsOptions {
-  name: string
-  routeParams: {
-    k: string
-    v: string
-  }
+export interface IGetPagesByParamOptions {
+  template: string
+  searchParam: string
   status?: string
 }
 
@@ -21,12 +18,9 @@ export interface IGetPageByTipeIdOptions {
 }
 
 export interface ITipeClientPageOptions {
-  name: string
+  template: string
   status?: string,
-  routeParams?: {
-    k: string
-    v: string
-  }
+  searchParam?: string
 }
 
 
@@ -44,7 +38,6 @@ export interface ITipeParams {
 export interface IFetchConfig {
   [key: string]: any
   status?: string
-  page?: string
 }
 
 export type APIFetcher = (

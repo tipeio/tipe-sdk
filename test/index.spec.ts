@@ -27,7 +27,7 @@ describe('Tipe', () => {
 
       const results = await tipe.getPagesByProjectId()
 
-      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pagesByProjectId`, {projectId})
+      expect(tipe.api).toHaveBeenNthCalledWith(1, 'POST', 'pagesByProjectId', {projectId})
       expect(results).toBe(expectedResults)
     })
   })
@@ -43,38 +43,38 @@ describe('Tipe', () => {
       const id = 'the_id'
       const results = await tipe.getPageById({id}, options)
 
-      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pageById`, {id}, options)
+      expect(tipe.api).toHaveBeenNthCalledWith(1, 'POST', 'pageById', {id}, options)
       expect(results).toBe(expectedResults)
     })
   })
 
-  describe('pages by type', () => {
+  describe('pages by template', () => {
     test('calls api with correct args', async ()=> {
       const options = {key: '1', project: '12'}
       const tipe = new Tipe(options)
       const expectedResults = {data: {}}
       tipe.api = jest.fn().mockResolvedValue(expectedResults)
+      
+      const config = {template: '12334', status: 'draft'}
+      const results = await tipe.getPagesByTemplate(config, options)
 
-      const type = {name: 'Blog', status: 'DRAFT'}
-      const results = await tipe.getPagesByType(type, options)
-
-      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pagesByType`, {page: type.name, status: type.status}, options)
+      expect(tipe.api).toHaveBeenNthCalledWith(1, 'POST', 'pagesByTemplate', config, options)
       expect(results).toBe(expectedResults)
     })
   })
 
-  describe('page by params', () => {
+  describe('page by param', () => {
     test('calls api with correct args', async ()=> {
       const options = { key: '1', project: '12' }
-      const pageConfig = {name: 'asdf', routeParams: { k: 'key', v: 'val'}, status: 'DRAFT'}
+      const pageConfig = {template: '12323', searchParam: 'test', status: 'DRAFT'}
       const tipe = new Tipe(options)
       const expectedResults = { data: {} }
       
       tipe.api = jest.fn().mockResolvedValue(expectedResults)
 
-      const results = await tipe.getPagesByParams(pageConfig, options)
+      const results = await tipe.getPagesByParam(pageConfig, options)
 
-      expect(tipe.api).toHaveBeenNthCalledWith(1, `POST`, `pageByParams`, {page: 'asdf', routeParams: { k: 'key', v: 'val'}, status: 'DRAFT'}, options)
+      expect(tipe.api).toHaveBeenNthCalledWith(1, 'POST', 'pageByParam', pageConfig, options)
       expect(results).toBe(expectedResults)
     })
   })
