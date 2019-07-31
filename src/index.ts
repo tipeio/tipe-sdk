@@ -12,6 +12,7 @@ import stringify from 'fast-json-stable-stringify'
 export default class Client {
   public static createClient = createClient
   public config: ITipeClientOptions
+  // Version bump test
 
   constructor(config: ITipeClientOptions) {
     this.config = config
